@@ -25,10 +25,17 @@
 
 require_once("../../config.php");
 
-$id = required_param('id', PARAM_INT);
+/*$id = required_param('id', PARAM_INT);
 
-$record = $DB->get_record('data_records', ['id' => $id], '*', MUST_EXIST);
+$record = $DB->get_record('data_records', ['id' => $id], '*', MUST_EXIST);*/
 
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url('/mod/data/review.php');
 
+$form =  new \mod_data\form\review_form();
 
+echo $OUTPUT->header();
 
+$form->display();
+
+echo $OUTPUT->footer();

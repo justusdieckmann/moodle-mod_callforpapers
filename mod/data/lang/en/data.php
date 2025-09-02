@@ -477,6 +477,8 @@ $string['reviewcount'] = 'Review count';
 $string['review'] = 'Review';
 $string['reviewstatus'] = 'Review status';
 $string['maxreviewers'] = 'Maximum amount of reviewers';
+$string['review_comment'] = 'Review comment';
+$string['rating'] = 'Rating';
 
 // Deprecated since Moodle 4.2.
 $string['fieldids'] = 'Field ids';
