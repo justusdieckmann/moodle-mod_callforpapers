@@ -46,9 +46,11 @@ class record_review extends persistent {
             'reviewgrade' => [
                 'type' => PARAM_FLOAT,
                 'null' => NULL_ALLOWED,
+                'optional' => true,
+                'default' => null,
             ],
             'approval' => [
-                'type' => PARAM_BOOL,
+                'type' => PARAM_INT,
                 'null' => NULL_ALLOWED,
             ]
         );

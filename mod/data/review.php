@@ -23,18 +23,49 @@
  * @package mod_data
  */
 
+use mod_data\local\persistent\record_review;
+use mod_data\manager;
+
 require_once("../../config.php");
 
-/*$id = required_param('id', PARAM_INT);
+$id = required_param('id', PARAM_INT);
 
-$record = $DB->get_record('data_records', ['id' => $id], '*', MUST_EXIST);*/
+$record = $DB->get_record('data_records', ['id' => $id], '*', MUST_EXIST);
+$datainstance = $DB->get_record('data', ['id' => $record->dataid], '*', MUST_EXIST);
 
-$PAGE->set_context(context_system::instance());
-$PAGE->set_url('/mod/data/review.php');
+$review = \mod_data\local\persistent\record_review::get_record(['recordid' => $record->id, 'revieweruserid' => $USER->id]);
+if (!$review) {
+    $review = new record_review(0, (object) ['recordid' => $record->id, 'revieweruserid' => $USER->id]);
+}
+list($course, $cm) = get_course_and_cm_from_instance($datainstance->id, 'data');
 
-$form =  new \mod_data\form\review_form();
+require_login($course, true, $cm);
+$PAGE->set_context(context_module::instance($cm->id));
+$PAGE->set_url('/mod/data/review.php', ['id' => $record->id]);
+
+require_capability('mod/data:reviewentry', $PAGE->context);
+
+$form = new \mod_data\form\review_form($PAGE->url, ['persistent' => $review]);
+$returnurl = new moodle_url('/mod/data/reviewview.php', ['d' => $datainstance->id]);
+if ($form->is_cancelled()) {
+    redirect($returnurl);
+} else if ($formdata = $form->get_data()) {
+    $review->from_record($formdata);
+    $review->save();
+    redirect($returnurl);
+}
 
 echo $OUTPUT->header();
+
+$manager = manager::create_from_data_record($record);
+$options = [
+    'page' => null,
+    'baseurl' => null,
+];
+$parser = $manager->get_template('singletemplate', $options);
+echo $OUTPUT->box_start('bg-gray m-3 p-3');
+echo $parser->parse_entries([$record]);
+echo $OUTPUT->box_end();
 
 $form->display();
 

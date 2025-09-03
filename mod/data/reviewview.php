@@ -424,9 +424,6 @@ if ($showactivity) {
             exit;
         }
 
-        $actionbar = new \mod_data\output\action_bar($data->id, $pageurl);
-        echo $actionbar->get_view_action_bar($hasrecords, $mode);
-
         // Advanced search form doesn't make sense for single (redirects list view).
         if ($maxcount && $mode != 'single') {
             data_print_preference_form($data, $perpage, $search, $sort, $order, $search_array, $advanced, $mode);

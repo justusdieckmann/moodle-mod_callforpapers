@@ -484,6 +484,9 @@ $string['slottemplate'] = 'Slot template';
 $string['headerreviewerlisttemplate'] = 'Define the appearance of the reviewer list template';
 $string['headerslottemplate'] = 'Define the appearance of the slot template';
 $string['reviewentries'] = 'Review entries';
+$string['meh'] = 'Meh!';
+$string['ilike'] = 'I like';
+$string['dislike'] = 'Dislike!';
 
 // Deprecated since Moodle 4.2.
 $string['fieldids'] = 'Field ids';

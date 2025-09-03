@@ -650,7 +650,8 @@ class template {
         if (!$this->instance->approval) {
             return '';
         }
-        return ($entry->approved) ? '' : html_writer::div(get_string('notapproved', 'data'), 'mod-data-approval-status-badge');
+        return ($entry->approved) ? html_writer::div(get_string('approved', 'data'), 'mod-data-approval-status-badge')
+            : html_writer::div(get_string('notapproved', 'data'), 'mod-data-approval-status-badge');
     }
 
     /**

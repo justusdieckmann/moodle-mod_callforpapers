@@ -26,16 +26,38 @@ namespace mod_data\form;
 
 global $CFG;
 
+use core\form\persistent;
+
 require_once($CFG->libdir . '/formslib.php');
-class review_form extends \moodleform {
-// Add the review comment field
+class review_form extends persistent {
+
+    /** @var string $persistentclass */
+    protected static $persistentclass = 'mod_data\\local\\persistent\\record_review';
 
     protected function definition() {
         $mform = $this->_form;
-        $mform->addElement ('editor', 'review_comment', get_string('review_comment', 'mod_data'));
-        $mform->setType('review_comment', PARAM_RAW);
-        $mform->addElement ('text', 'rating', get_string('rating', 'mod_data'));
-        $mform->setType('rating', PARAM_INT);
+
+        $persistent =  $this->get_persistent();
+
+
+        $mform->addElement('textarea', 'reviewtext', get_string('review_comment', 'mod_data'));
+        $mform->setType('reviewtext', PARAM_RAW);
+
+        $dislike_options = [
+            get_string('dislike', 'mod_data'),
+            'no like',
+            'i hate',
+            'igitt',
+            'don\'t like'
+        ];
+        $dislike_string = $dislike_options[rand(0, count($dislike_options) - 1)];
+        $options = [
+            0 => '--',
+            1 => get_string('ilike', 'mod_data'),
+            2 => get_string('meh', 'mod_data'),
+            3 => $dislike_string,
+        ];
+        $mform->addElement('select', 'approval', get_string('rating', 'mod_data'), $options);
         $this->add_action_buttons();
     }
 }
