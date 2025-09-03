@@ -41,7 +41,7 @@ class reviewer_information {
             if (!isset(self::$data[$recordreview->get('recordid')])) {
                 self::$data[$recordreview->get('recordid')] = [];
             }
-            self::$data[$recordreview->get('recordid')][$recordreview->get('userid')] = $recordreview;
+            self::$data[$recordreview->get('recordid')][$recordreview->get('revieweruserid')] = $recordreview;
         }
         self::$datainstances[$instanceid] = true;
     }

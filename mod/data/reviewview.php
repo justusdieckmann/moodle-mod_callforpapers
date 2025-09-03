@@ -73,6 +73,8 @@ comment::init();
 
 require_capability('mod/data:reviewentry', $context);
 
+\mod_data\local\reviewer_information::pull_data_for($data->id);
+
 /// Check further parameters that set browsing preferences
 if (!isset($SESSION->dataprefs)) {
     $SESSION->dataprefs = array();
@@ -506,16 +508,23 @@ if ($showactivity) {
                 $baseurl = new moodle_url($baseurl, $baseurlparams);
 
                 echo $OUTPUT->box_start('', 'data-listview-content');
-                echo $data->reviewerlisttemplateheader;
+
                 $options = [
                     'search' => $search,
                     'page' => $page,
                     'baseurl' => $baseurl,
                 ];
+
+                $firstrecord = $records[array_key_first($records)];
+
+                $parser = $manager->get_template('reviewerlisttemplateheader', $options);
+                echo $parser->parse_entries([$firstrecord]);
+
                 $parser = $manager->get_template('reviewerlisttemplate', $options);
                 echo $parser->parse_entries($records);
 
-                echo $data->reviewerlisttemplatefooter;
+                $parser = $manager->get_template('reviewerlisttemplatefooter', $options);
+                echo $parser->parse_entries([$firstrecord]);
                 echo $OUTPUT->box_end();
             }
 

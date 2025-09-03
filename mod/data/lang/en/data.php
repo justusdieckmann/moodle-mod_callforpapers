@@ -487,6 +487,9 @@ $string['reviewentries'] = 'Review entries';
 $string['meh'] = 'Meh!';
 $string['ilike'] = 'I like';
 $string['dislike'] = 'Dislike!';
+$string['reviews'] = 'Reviewers';
+$string['reviewsheader'] = 'Reviewers header';
+$string['reviewer_i'] = 'Reviewer {$a}';
 
 // Deprecated since Moodle 4.2.
 $string['fieldids'] = 'Field ids';

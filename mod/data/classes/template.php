@@ -903,12 +903,39 @@ class template {
         return $OUTPUT->render($actionmenu);
     }
 
-    protected function get_tag_dashboard_reviewers_replacement(stdClass $entry, bool $canmanageentry): string {
-        global $DB;
+    protected function get_tag_reviewersheader_replacement(stdClass $entry, bool $canmanageentry): string {
+        global $PAGE;
+
+        $output = '';
+
+        if (!has_capability('mod/data:reviewentry', $PAGE->context)) {
+            return '';
+        }
+
+        for ($i = 1; $i <= $this->instance->maxreviewers; $i++) {
+            $output .= '<th>' . get_string('reviewer_i', 'mod_data', $i) . '</th>';
+        }
+
+        return $output;
+    }
+
+    protected function get_tag_reviewers_replacement(stdClass $entry, bool $canmanageentry): string {
+        global $PAGE;
+
+        if (!has_capability('mod/data:reviewentry', $PAGE->context)) {
+            return '';
+        }
+
         $dataforrecord = reviewer_information::get_data_for_record($entry->id);
         $output = '';
+
         foreach ($dataforrecord as $record) {
-            // $output .= '<td>' . $record->
+            $output .= '<td>' . $record->get('approval') . '</td>';
+        }
+        for ($i = count($dataforrecord); $i < $this->instance->maxreviewers; $i++) {
+            $output .= '<td>-</td>';
+
+
         }
         return $output;
     }

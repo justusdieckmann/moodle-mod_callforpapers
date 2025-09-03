@@ -58,8 +58,8 @@ class record_review extends persistent {
 
     public static function get_reviews_for_instance(int $instanceid) {
         return self::get_records_select(
-            'recordid IN (SELECT recordid FROM data_record_review WHERE instanceid = :instanceid)',
-            ['instanceid' => $instanceid],
+            'recordid IN (SELECT id FROM {data_records} WHERE dataid = :dataid)',
+            ['dataid' => $instanceid],
             'id ASC'
         );
     }
