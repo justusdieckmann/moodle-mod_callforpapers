@@ -35,6 +35,7 @@ define ('DATA_APPROVED', -3);
 define ('DATA_TIMEADDED', 0);
 define ('DATA_TIMEMODIFIED', -4);
 define ('DATA_TAGS', -5);
+define ('DATA_REVIEWCOUNT', -6);
 
 define ('DATA_CAP_EXPORT', 'mod/data:viewalluserpresets');
 // Users having assigned the default role "Non-editing teacher" can export database records
@@ -1822,6 +1823,7 @@ function data_print_preference_form($data, $perpage, $search, $sort='', $order='
         echo '</optgroup>';
     }
     $options = array();
+    $options[DATA_REVIEWCOUNT]  = get_string('reviewcount', 'data');
     $options[DATA_TIMEADDED]    = get_string('timeadded', 'data');
     $options[DATA_TIMEMODIFIED] = get_string('timemodified', 'data');
     $options[DATA_FIRSTNAME]    = get_string('authorfirstname', 'data');
