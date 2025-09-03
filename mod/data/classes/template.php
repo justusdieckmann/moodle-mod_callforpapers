@@ -21,7 +21,7 @@ use action_menu_link_secondary;
 use core\output\checkbox_toggleall;
 use data_field_base;
 use html_writer;
-use mod_data\manager;
+use mod_data\local\reviewer_information;
 use moodle_url;
 use pix_icon;
 use stdClass;
@@ -774,10 +774,8 @@ class template {
         if (!$canmanageentry) {
             return '';
         }
-        $url = new moodle_url($this->baseurl, [
-            'review' => $entry->id,
-            'sesskey' => sesskey(),
-            'mode' => 'single',
+        $url = new moodle_url('/mod/data/review.php', [
+            'id' => $entry->id,
         ]);
 
         return html_writer::tag(
@@ -902,6 +900,16 @@ class template {
         }
 
         return $OUTPUT->render($actionmenu);
+    }
+
+    protected function get_tag_dashboard_reviewers_replacement(stdClass $entry, bool $canmanageentry): string {
+        global $DB;
+        $dataforrecord = reviewer_information::get_data_for_record($entry->id);
+        $output = '';
+        foreach ($dataforrecord as $record) {
+            // $output .= '<td>' . $record->
+        }
+        return $output;
     }
 
     /**

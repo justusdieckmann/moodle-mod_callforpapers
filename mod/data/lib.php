@@ -815,6 +815,10 @@ function data_generate_default_template(&$data, $template, $recordid = 0, $form 
         'listtemplateheader',
         'listtemplatefooter',
         'rsstitletemplate',
+        'reviewerlisttemplate',
+        'reviewerlisttemplateheader',
+        'reviewerlisttemplatefooter',
+        'slottemplate',
     ];
     if (in_array($template, $emptytemplates)) {
         return '';
@@ -3360,6 +3364,11 @@ function data_extend_settings_navigation(settings_navigation $settings, navigati
         $importentriesnode = $datanode->add(get_string('importentries', 'data'),
             new moodle_url('/mod/data/import.php', array('d' => $data->id)));
         $importentriesnode->set_show_in_secondary_navigation(false);
+    }
+
+    if (has_capability('mod/data:reviewentry', $settings->get_page()->cm->context)) {
+        $reviewentriesnode = $datanode->add(get_string('reviewentries', 'data'),
+            new moodle_url('/mod/data/reviewview.php', array('d' => $data->id)));
     }
 
     if (has_capability('mod/data:managetemplates', $settings->get_page()->cm->context)) {

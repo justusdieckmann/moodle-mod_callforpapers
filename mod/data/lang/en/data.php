@@ -479,6 +479,11 @@ $string['reviewstatus'] = 'Review status';
 $string['maxreviewers'] = 'Maximum amount of reviewers';
 $string['review_comment'] = 'Review comment';
 $string['rating'] = 'Rating';
+$string['reviewerlisttemplate'] = 'Reviewer list template';
+$string['slottemplate'] = 'Slot template';
+$string['headerreviewerlisttemplate'] = 'Define the appearance of the reviewer list template';
+$string['headerslottemplate'] = 'Define the appearance of the slot template';
+$string['reviewentries'] = 'Review entries';
 
 // Deprecated since Moodle 4.2.
 $string['fieldids'] = 'Field ids';

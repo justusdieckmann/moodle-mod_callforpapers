@@ -106,6 +106,47 @@ function xmldb_data_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2024100701, 'data');
     }
 
+    if ($oldversion < 2024100702) {
+        // Define field reviewerlisttemplate to be added to data.
+        $table = new xmldb_table('data');
+        $field = new xmldb_field('reviewerlisttemplate', XMLDB_TYPE_TEXT, null, null, null, null, null, 'maxreviewers');
+
+        // Conditionally launch add field reviewerlisttemplate.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field reviewerlisttemplateheader to be added to data.
+        $table = new xmldb_table('data');
+        $field = new xmldb_field('reviewerlisttemplateheader', XMLDB_TYPE_TEXT, null, null, null, null, null, 'reviewerlisttemplate');
+
+        // Conditionally launch add field reviewerlisttemplateheader.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field reviewerlisttemplatefooter to be added to data.
+        $table = new xmldb_table('data');
+        $field = new xmldb_field('reviewerlisttemplatefooter', XMLDB_TYPE_TEXT, null, null, null, null, null, 'reviewerlisttemplateheader');
+
+        // Conditionally launch add field reviewerlisttemplatefooter.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field slottemplate to be added to data.
+        $table = new xmldb_table('data');
+        $field = new xmldb_field('slottemplate', XMLDB_TYPE_TEXT, null, null, null, null, null, 'reviewerlisttemplatefooter');
+
+        // Conditionally launch add field slottemplate.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Data savepoint reached.
+        upgrade_mod_savepoint(true, 2024100702, 'data');
+    }
+
     // Automatically generated Moodle v4.3.0 release upgrade line.
     // Put any upgrade step following this.
 
