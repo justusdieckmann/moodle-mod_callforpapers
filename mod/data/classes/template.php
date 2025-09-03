@@ -257,7 +257,7 @@ class template {
             'delete' => new pix_icon('t/delete', get_string('delete'), '', $attrs),
             'more' => new pix_icon('t/preview', get_string('more', 'data'), '', $attrs),
             'approve' => new pix_icon('t/approve', get_string('approve', 'data'), '', $attrs),
-            'review' => new pix_icon('mod_data:t/review', get_string('review', 'data'), '', $attrs),
+            'review' => new pix_icon('t/review', get_string('review', 'data'), 'mod_data', $attrs),
             'disapprove' => new pix_icon('t/block', get_string('disapprove', 'data'), '', $attrs),
         ];
     }
