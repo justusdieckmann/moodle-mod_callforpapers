@@ -3367,8 +3367,13 @@ function data_extend_settings_navigation(settings_navigation $settings, navigati
     }
 
     if (has_capability('mod/data:reviewentry', $settings->get_page()->cm->context)) {
-        $reviewentriesnode = $datanode->add(get_string('reviewentries', 'data'),
-            new moodle_url('/mod/data/reviewview.php', array('d' => $data->id)));
+        $reviewentriesnode = $datanode->add(
+            get_string('reviewentries', 'data'),
+            new moodle_url('/mod/data/reviewview.php', array('d' => $data->id)),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'reviewentries',
+        );
     }
 
     if (has_capability('mod/data:managetemplates', $settings->get_page()->cm->context)) {
@@ -3383,11 +3388,27 @@ function data_extend_settings_navigation(settings_navigation $settings, navigati
             $defaultemplate = 'singletemplate';
         }
 
-        $datanode->add(get_string('presets', 'data'), new moodle_url('/mod/data/preset.php', array('d' => $data->id)));
-        $datanode->add(get_string('fields', 'data'),
-            new moodle_url('/mod/data/field.php', array('d' => $data->id)));
-        $datanode->add(get_string('templates', 'data'),
-            new moodle_url('/mod/data/templates.php', array('d' => $data->id)));
+        $datanode->add(
+            get_string('presets', 'data'),
+            new moodle_url('/mod/data/preset.php', array('d' => $data->id)),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'presets',
+        );
+        $datanode->add(
+            get_string('fields', 'data'),
+            new moodle_url('/mod/data/field.php', array('d' => $data->id)),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'fields',
+        );
+        $datanode->add(
+            get_string('templates', 'data'),
+            new moodle_url('/mod/data/templates.php', array('d' => $data->id)),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            'templates',
+        );
     }
 
     if (!empty($CFG->enablerssfeeds) && !empty($CFG->data_enablerssfeeds) && $data->rssarticles > 0) {
