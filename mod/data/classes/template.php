@@ -939,8 +939,10 @@ class template {
             $user = core_user::get_user($record->get('revieweruserid'));
             $approvalindex = $record->get('approval') ?: null;
 
-            $output .= '<td>' . fullname($user) . '<br>'
-                . html_writer::span($approvalindex ? $options[$approvalindex]: '', '', ['title' => $record->get('reviewtext')]) . '</td>';
+            $output .= '<td>' . html_writer::span(
+                fullname($user) . ':<br><b>'
+                . html_writer::span($approvalindex ? $options[$approvalindex]: '', '', ['title' => $record->get('reviewtext')]) .
+                '</b></td>', '', ['style' => 'text-decoration:underline; text-decoration-style: dotted']);
         }
         for ($i = count($dataforrecord); $i < $this->instance->maxreviewers; $i++) {
             $url = new moodle_url('/mod/data/review.php', [
