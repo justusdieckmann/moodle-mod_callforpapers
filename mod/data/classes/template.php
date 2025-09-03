@@ -899,7 +899,6 @@ class template {
                 }
             }
         }
-
         return $OUTPUT->render($actionmenu);
     }
 
@@ -920,7 +919,7 @@ class template {
     }
 
     protected function get_tag_reviewers_replacement(stdClass $entry, bool $canmanageentry): string {
-        global $PAGE;
+        global $PAGE, $OUTPUT;
 
         if (!has_capability('mod/data:reviewentry', $PAGE->context)) {
             return '';
@@ -929,11 +928,32 @@ class template {
         $dataforrecord = reviewer_information::get_data_for_record($entry->id);
         $output = '';
 
+        $options = [
+            0 => '--',
+            1 => get_string('ilike', 'mod_data'),
+            2 => get_string('meh', 'mod_data'),
+            3 => get_string('dislike', 'mod_data'),
+        ];
+
         foreach ($dataforrecord as $record) {
-            $output .= '<td>' . $record->get('approval') . '</td>';
+            $user = core_user::get_user($record->get('revieweruserid'));
+            $approvalindex = $record->get('approval') ?: null;
+
+            $output .= '<td>' . fullname($user) . '<br>'
+                . html_writer::span($approvalindex ? $options[$approvalindex]: '', '', ['title' => $record->get('reviewtext')]) . '</td>';
         }
         for ($i = count($dataforrecord); $i < $this->instance->maxreviewers; $i++) {
-            $output .= '<td>-</td>';
+            $url = new moodle_url('/mod/data/review.php', [
+                'id' => $entry->id,
+            ]);
+
+            $output .= '<td>' .
+                html_writer::tag(
+                    'span',
+                    $OUTPUT->action_icon($url, $this->icons['review']),
+                    ['class' => 'review']
+                )
+                .'</td>';
 
 
         }
